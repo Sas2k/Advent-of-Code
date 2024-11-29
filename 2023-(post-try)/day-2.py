@@ -64,3 +64,5 @@ for l in range(0, len(data)):
     puzzleOutput2 += curProduct
 
 print("Part 2 Output -> ", puzzleOutput2)
+
+puzzleInput.close()
