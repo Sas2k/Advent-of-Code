@@ -39,7 +39,7 @@ for i in range(0, fileLen):
                 break
         if safe:
             puzzle2Output += 1
-    if safe == False:
+    if safe is False:
         sorts = curLine.copy()
         sorts.sort()
         count = 0
