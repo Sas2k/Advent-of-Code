@@ -83,7 +83,7 @@ if debug == "y":
 else:
     bar4 = ShadyBar("Fragmenting Disk:", max=len(clumpedDisk))
 
-for j in range(len(clumpedDisk) - 1, -1, -1):
+for j in reversed(range(len(clumpedDisk))):
     if clumpedDisk[j].count(".") == len(clumpedDisk[j]):
         if debug == "n":
             bar4.next()
