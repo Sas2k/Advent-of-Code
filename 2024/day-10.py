@@ -47,7 +47,7 @@ if debug == "y":
     print(Headers)
 print("Done.")
 
-print("Running Part 1")
+print("Running Part 1 & Part 2")
 
 
 def CheckNeighbours(x: int, y: int, mapArr: list[list[int]]) -> list:
@@ -71,12 +71,12 @@ def CheckNeighbours(x: int, y: int, mapArr: list[list[int]]) -> list:
     return neighbours
 
 
-def dfs(mapArr: list[list[int]], x: int, y: int):
+def dfs(mapArr: list[list[int]], x: int, y: int) -> list:
     "Depth first search"
 
     visited = set()
     stack = [(y, x)]
-    nines = set()
+    nines = list()
 
     while stack:
         cY, cX = stack.pop()
@@ -93,21 +93,27 @@ def dfs(mapArr: list[list[int]], x: int, y: int):
 
             for nY, nX in neighbours:
                 if mapArr[nY][nX] == 9:
-                    nines.add((nY, nX))
+                    nines.append((nY, nX))
 
                 stack.append((nY, nX))
 
-    print(visited)
-    return len(nines)
+    return [len(set(nines)), len(nines)]
 
 
 curMap = Map.copy()
 puzzle1Output = 0
+puzzle2Output = 0
 
 for i in range(0, len(Headers)):
     Y = Headers[i][0]
     X = Headers[i][1]
 
-    puzzle1Output += dfs(curMap, X, Y)
+    search = dfs(curMap, X, Y)
+
+    print(search)
+
+    puzzle1Output += search[0]
+    puzzle2Output += search[1]
 
 print(f"Part 1 Puzzle Output -> {puzzle1Output}")
+print(f"Part 2 Puzzle Output -> {puzzle2Output}")
