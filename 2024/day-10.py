@@ -81,8 +81,6 @@ def dfs(mapArr: list[list[int]], x: int, y: int) -> list:
     while stack:
         cY, cX = stack.pop()
         if (cY, cX) not in visited:
-            if 0 > cY or 0 > cX:
-                continue
             visited.add((cY, cX))
             neighbours = CheckNeighbours(cX, cY, mapArr)
 
