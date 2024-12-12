@@ -3,6 +3,7 @@
 -        Day 12       -
 : Sas2k
 """
+import itertools
 
 print("Advent of Code 2024 - Day 12")
 
@@ -47,6 +48,24 @@ def CheckNeighbours(x: int, y: int, mapArr: list[list[int]]) -> list:
     return neighbours, perimeter
 
 
+def getSides(region: set, bound: tuple):
+    corners = 0
+
+    for y, x in itertools.product(range(-1, bound[0]), range(-1, bound[1])):
+        tLeft = (y, x) in region
+        bLeft = (y + 1, x) in region
+        tRight = (y, x + 1) in region
+        bRight = (y + 1, x + 1) in region
+
+        gridSpaces = sum([tLeft, bLeft, tRight, bRight])
+        corners += gridSpaces % 2
+
+        if gridSpaces == 2 and ((tLeft and bRight) or (tRight and bLeft)):
+            corners += 2
+
+    return corners
+
+
 def CalculatePrice(mapArr: list[list[int]], x: int, y: int) -> list:
     "Does a Depth First Search for vegetable patches and find it's price"
     visited = set()
@@ -66,8 +85,9 @@ def CalculatePrice(mapArr: list[list[int]], x: int, y: int) -> list:
     return [len(set(visited)), perimeter, visited]
 
 
-print("Part 1 Running....")
+print("Part 1 & 2 Running....")
 puzzle1Output = 0
+puzzle2Output = 0
 
 visited = set()
 
@@ -77,7 +97,10 @@ for y in range(0, len(data)):
             continue
         curInfo = CalculatePrice(data, x, y)
         puzzle1Output += curInfo[0] * curInfo[1]
+        puzzle2Output += curInfo[0] * \
+            getSides(curInfo[2], (len(data), len(data[0])))
         for coOrd in curInfo[2]:
             visited.add(coOrd)
 
 print(f"Part 1 Puzzle Output -> {puzzle1Output}")
+print(f"Part 2 Puzzle Output -> {puzzle2Output}")
